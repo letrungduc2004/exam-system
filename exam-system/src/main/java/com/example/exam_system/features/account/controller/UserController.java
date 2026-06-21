@@ -1,0 +1,25 @@
+package com.example.exam_system.features.account.controller;
+
+import com.example.exam_system.features.account.dto.UserRequest;
+import com.example.exam_system.common.dto.APIResponse;
+import com.example.exam_system.features.account.dto.UserResponse;
+import com.example.exam_system.features.account.service.UserService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequiredArgsConstructor
+public class UserController {
+    private final UserService userService;
+
+    @PutMapping("/user")
+    public APIResponse<UserResponse> updateExam(@RequestBody @Valid UserRequest request) {
+        APIResponse<UserResponse> response = APIResponse.<UserResponse>builder()
+                .code(200)
+                .message("Update Success")
+                .data(userService.updateUser(request))
+                .build();
+        return response;
+    }
+}
