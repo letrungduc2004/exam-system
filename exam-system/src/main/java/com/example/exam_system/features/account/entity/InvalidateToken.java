@@ -1,4 +1,4 @@
-package com.example.exam_system.features.authentication.entity;
+package com.example.exam_system.features.account.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

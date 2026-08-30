@@ -1,13 +1,9 @@
-package com.example.exam_system.features.question.entity;
-import com.example.exam_system.features.exam_attempt.entity.StudentResponse;
+package com.example.exam_system.features.exam.entity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "options")
@@ -29,7 +25,5 @@ public class Option {
     @JoinColumn(name = "question_id")
     Question question;
 
-//    @OneToMany(mappedBy = "selectedOption")
-//    List<StudentResponse> studentResponses = new ArrayList<>();
 }
 

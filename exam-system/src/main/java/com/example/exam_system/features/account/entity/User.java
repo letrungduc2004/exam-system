@@ -1,7 +1,5 @@
 package com.example.exam_system.features.account.entity;
 
-import com.example.exam_system.features.authentication.entity.Role;
-import com.example.exam_system.features.exam_attempt.entity.ExamAttempt;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -36,13 +34,9 @@ public class User {
     @Column(nullable = false)
     String password;
 
-
     @Temporal(TemporalType.DATE)
     @Column(name = "created_at")
     Date createdAt ;
-
-    @OneToMany(mappedBy = "user")
-    List<ExamAttempt> examAttempts = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(name = "user_role",

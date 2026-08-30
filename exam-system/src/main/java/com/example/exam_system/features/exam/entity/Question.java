@@ -1,16 +1,17 @@
-package com.example.exam_system.features.question.entity;
+package com.example.exam_system.features.exam.entity;
 
 
-import com.example.exam_system.features.exam.entity.ExamPart;
-import com.example.exam_system.features.exam_attempt.entity.StudentResponse;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "questions")
@@ -37,6 +38,4 @@ public class Question {
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE, orphanRemoval = true)
     List<Option> options = new ArrayList<>();
-//    @OneToMany(mappedBy = "question")
-//    List<StudentResponse> studentResponses = new ArrayList<>();
 }

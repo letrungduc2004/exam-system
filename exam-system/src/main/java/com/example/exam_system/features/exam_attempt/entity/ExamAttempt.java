@@ -6,10 +6,13 @@ import com.example.exam_system.features.exam.entity.Exam;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Table(name = "exam_attempts")
 @Entity
@@ -24,10 +27,14 @@ public class ExamAttempt {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
+    @Column(name = "public_id", unique = true, updatable = false, nullable = false)
+    @JdbcTypeCode(SqlTypes.UUID)
+    UUID publicId;
+
     @Column(name = "start_time", nullable = false)
     LocalDateTime startTime;
 
-    @Column(name = "submit_time", nullable = false)
+    @Column(name = "submit_time")
     LocalDateTime submitTime;
 
     @Column(name = "total_score", nullable = false)
@@ -40,6 +47,9 @@ public class ExamAttempt {
     @JoinColumn(name = "user_id")
     User user;
 
+    @Column(name = "correct_count")
+    Long correctAnswersCount;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "exam_id")
     Exam exam;
@@ -48,6 +58,19 @@ public class ExamAttempt {
     @JoinColumn(name = "current_part_id")
     ExamPart currentPart;
 
+    @Column(name = "is_passed")
+    Boolean isPassed;
+
+    @Column(name = "message")
+    String message;
+
     @OneToMany(mappedBy = "examAttempt", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    List<StudentResponse> studentResponses = new ArrayList<>();
+    List<StudentAnswer> studentResponses = new ArrayList<>();
+
+    @PrePersist
+    public void prePersist() {
+        if (this.publicId == null) {
+            this.publicId = UUID.randomUUID();
+        }
+    }
 }

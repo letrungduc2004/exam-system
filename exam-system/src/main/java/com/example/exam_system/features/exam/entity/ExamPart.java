@@ -1,7 +1,5 @@
 package com.example.exam_system.features.exam.entity;
 
-import com.example.exam_system.features.question.entity.Question;
-import com.example.exam_system.features.exam_attempt.entity.ExamAttempt;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -35,8 +33,4 @@ public class ExamPart {
 
     @OneToMany(mappedBy = "examPart", cascade = CascadeType.REMOVE, orphanRemoval = true)
     List<Question> questions = new ArrayList<>();
-
-
-    @OneToMany(mappedBy = "currentPart")
-    List<ExamAttempt> examAttempts = new ArrayList<>();
 }

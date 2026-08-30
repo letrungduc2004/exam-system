@@ -1,37 +1,42 @@
 package com.example.exam_system.features.account.service;
 
-import com.example.exam_system.features.account.dto.UserRequest;
-import com.example.exam_system.features.account.dto.UserResponse;
-import com.example.exam_system.features.authentication.entity.Role;
-import com.example.exam_system.features.account.entity.User;
+import com.example.exam_system.common.enums.ROLE;
 import com.example.exam_system.configuration.exception.AppException;
 import com.example.exam_system.configuration.exception.ErrorCode;
+import com.example.exam_system.configuration.security.CustomPasswordConfig;
+import com.example.exam_system.features.account.dto.request.UserRequest;
+import com.example.exam_system.features.account.dto.response.UserResponse;
+import com.example.exam_system.features.account.entity.Role;
+import com.example.exam_system.features.account.entity.User;
 import com.example.exam_system.features.account.mapper.UserMapping;
-import com.example.exam_system.features.authentication.repository.RoleRepository;
+import com.example.exam_system.features.account.repository.RoleRepository;
 import com.example.exam_system.features.account.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
-    private final UserMapping mapping;
-    private final PasswordEncoder encoder ;
+    private final UserMapping userMapping;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserResponse updateUser(UserRequest request) {
-        User existingUser = userRepository.findByUserName(request.getUserName()).orElseThrow(() ->
-                new AppException(ErrorCode.USER_NOT_FOUND));
-        mapping.mapToUpdate(existingUser, request);
-        List<Role> role = roleRepository.findAllById(request.getRoles());
-        existingUser.setRoles(new HashSet<>(role));
-        existingUser.setPassword(encoder.encode(request.getPassword()));
-        userRepository.save(existingUser);
-        return mapping.mappingUserResponse(existingUser);
+    @Transactional(rollbackFor = Exception.class)
+    public UserResponse updateUser(UUID userId, UserRequest request) {
+        User user = existingUser(userId);
+        user.setFullName(request.getFullName());
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        return userMapping.toUserResponse(user);
+    }
+
+    public User existingUser(UUID userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
+        return user;
     }
 }

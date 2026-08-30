@@ -5,7 +5,8 @@ import jakarta.validation.ConstraintValidatorContext;
 
 public class PasswordConstrain implements ConstraintValidator<PasswordValidation, String> {
 
-    private String regex = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8}$";
+    private String regex = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$";
+
 
     @Override
     public void initialize(PasswordValidation constraintAnnotation) {

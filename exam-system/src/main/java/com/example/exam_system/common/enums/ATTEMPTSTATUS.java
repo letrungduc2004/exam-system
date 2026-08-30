@@ -1,5 +1,5 @@
 package com.example.exam_system.common.enums;
 
-public enum ExamStatus {
+public enum ATTEMPTSTATUS {
     STARTED, SUBMITTED, GRADED
 }

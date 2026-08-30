@@ -1,4 +1,4 @@
-package com.example.exam_system.features.account.dto.request;
+package com.example.exam_system.features.account.dto.response;
 
 import lombok.*;
 
@@ -7,7 +7,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PermissionRequest {
+public class PermissionResponse {
     private String permissionName;
     private String description;
 }

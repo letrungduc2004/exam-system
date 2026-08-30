@@ -1,8 +1,9 @@
-package com.example.exam_system.features.account.dto;
+package com.example.exam_system.features.account.dto.response;
 
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.UUID;
 
 @Getter
@@ -15,6 +16,5 @@ public class UserResponse {
     private String userName;
     private String fullName;
     private String email;
-    private String password;
-    private LocalDateTime createdAt;
+    private Date createdAt;
 }
