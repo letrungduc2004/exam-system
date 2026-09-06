@@ -9,5 +9,5 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class IntrospectResponse {
-    private boolean authenticated;
+    private String token;
 }

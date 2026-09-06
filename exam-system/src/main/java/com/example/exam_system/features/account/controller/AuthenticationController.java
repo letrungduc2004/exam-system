@@ -10,16 +10,23 @@ import com.example.exam_system.features.account.dto.response.LoginResponse;
 import com.example.exam_system.features.account.service.AuthenticationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
-
 
     @PostMapping("/login")
     public APIResponse<LoginResponse> login(@RequestBody @Valid LoginRequest request) {
@@ -41,11 +48,21 @@ public class AuthenticationController {
         return response;
     }
 
-    @PostMapping("/verifier-token")
-    public APIResponse<IntrospectResponse>  verifyToken(@RequestBody @Valid IntrospectRequest request) {
+    @PostMapping("/refresh-token")
+    public APIResponse<IntrospectResponse> refreshToken(@RequestBody @Valid IntrospectRequest request) {
         APIResponse<IntrospectResponse> response = APIResponse.<IntrospectResponse>builder()
                 .code(1000)
-                .data(authenticationService.verifyToken(request))
+                .data(authenticationService.refreshToken(request))
+                .build();
+        return response;
+    }
+
+    @PostMapping("/logout-token")
+    public APIResponse<Void> logoutToken(@RequestBody @Valid IntrospectRequest request) {
+        authenticationService.logoutToken(request);
+        APIResponse<Void> response = APIResponse.<Void>builder()
+                .code(1000)
+                .message("Bạn đã đăng xuất")
                 .build();
         return response;
     }

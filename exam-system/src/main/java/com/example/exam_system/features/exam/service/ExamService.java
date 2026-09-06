@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,6 +35,8 @@ public class ExamService {
     private final ExamMapping examMapping;
     private final ExamDetailMapping examDetailMapping;
 
+    @PreAuthorize("hasRole('STUDENT')")
+    @Transactional(readOnly = true)
     public Page<ExamResponse> getExam(List<String> examType, List<Integer> difficulty, List<String> level,
                                       Double priceFrom, Double priceTo, Pageable pageable) {
         // Kiểm tra trường hợp có examType nhưng value empty
