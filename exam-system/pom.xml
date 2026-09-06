@@ -66,18 +66,6 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- Ma hoa mat khau Bcrypt -->
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-crypto</artifactId>
-            <version>7.1.0-RC1</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
-        </dependency>
 
     </dependencies>
 
