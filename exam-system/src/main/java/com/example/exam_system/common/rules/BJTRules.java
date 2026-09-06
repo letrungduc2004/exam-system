@@ -1,6 +1,5 @@
 package com.example.exam_system.common.rules;
 
-import com.example.exam_system.features.exam_attempt.dto.response.ScoreRangeResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,19 +21,6 @@ public enum BJTRules {
         this.minScore = minScore;
         this.maxScore = maxScore;
 
-    }
-
-    public static List<ScoreRangeResponse> getScoring() {
-        List<ScoreRangeResponse> response = new ArrayList<>();
-        for (BJTRules rules : values()) {
-            ScoreRangeResponse score = ScoreRangeResponse.builder()
-                    .level(rules.level)
-                    .scoreFrom(rules.minScore)
-                    .scoreTo(rules.maxScore)
-                    .build();
-            response.add(score);
-        }
-        return response;
     }
 
 }

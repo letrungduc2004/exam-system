@@ -1,7 +1,6 @@
 package com.example.exam_system.common.rules;
 
-import com.example.exam_system.features.exam_attempt.dto.response.ScoreFailResponse;
-import com.example.exam_system.features.exam_attempt.dto.response.ScoreRangeResponse;
+
 
 public enum JLPTRules {
     N1("N1", 100.0, 19.0),
@@ -20,15 +19,6 @@ public enum JLPTRules {
         this.failScore = failScore;
     }
 
-    public static ScoreFailResponse getScoring(String level) {
-        JLPTRules rules = JLPTRules.valueOf(level);
-        ScoreFailResponse score = ScoreFailResponse.builder()
-                .level(rules.level)
-                .failScore(rules.failScore)
-                .passScore(rules.passScore)
-                .build();
-        return score;
-    }
 
     public static double getFailScore(String level) {
         return JLPTRules.valueOf(level).failScore;
